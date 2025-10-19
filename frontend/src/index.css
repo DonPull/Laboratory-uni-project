@@ -6,6 +6,11 @@
   color: rgb(17, 17, 17);
   background-color: #f5f5f5;
 
+  --select-button-container: black;
+  --select-button-label-1: white;
+  --select-button-label-2: white;
+  --select-button-selector: #525252;;
+
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

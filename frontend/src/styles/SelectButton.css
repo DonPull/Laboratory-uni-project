@@ -1,0 +1,54 @@
+.select-button-container{
+    /* display: flex; */
+    position: relative;
+    align-items: center;
+    /* gap: 20px; */
+    border-radius: 10px;
+    background-color: var(--select-button-container);
+    width: fit-content;
+    padding: 4px 6px 4px 6px;
+    /* color: var(--main-color-1); */
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* give everything inside the container z-index 5 so that the option selector is rendered at the bottom and not on top covering the option it's currently highlighting*/
+.select-button-container *:not(.option-selector){
+    z-index: 5;
+}
+
+.select-button-container label{
+    cursor: pointer;
+    margin: 4px 12px;
+    user-select: none;
+
+    /* fancy color transition effect when the .option-selector is over the text*/
+    /* mix-blend-mode: difference; */
+    /* color: var(--main-color-2-dim); */
+    /* color: var(--select-button-label-1); */
+    /* color: black; */
+}
+
+.select-button-container label:nth-of-type(1){
+    color: var(--select-button-label-1);
+    /* color: white; */
+}
+
+.select-button-container label:nth-of-type(2){
+    color: var(--select-button-label-2);
+    /* color: white; */
+}
+
+.select-button-container .option-selector{
+    /* position: fixed; */
+    position: absolute;
+    border-radius: 8px;
+    height: 27px;
+
+    /* background-color: #b5b5b5; */
+    background-color: var(--select-button-selector); /* Set the initial background color to black */
+    color: white; /* Set the initial text color to white */
+
+    z-index: 1;
+    transition: 200ms;
+}
