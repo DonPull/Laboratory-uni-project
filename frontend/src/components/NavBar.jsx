@@ -11,7 +11,7 @@ function NavBar({ user }) {
             <Logo />
             <div className="separator-vertical" />
             {!user ? <div id="login-button"><img src={avatarIcon} alt="Avatar" /><button onClick={() => {navigate('/login')}}>Login</button></div> : 
-                <div>
+                <div className= "navbar-button">
                     <button onClick={() => {navigate('/employee-list')}}>Employee List</button>
                     <button onClick={() => {navigate('/lab-results')}}>Lab Results</button>
                     <button onClick={() => {navigate('/reports')}}>Reports</button>

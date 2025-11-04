@@ -5,5 +5,25 @@
     border-radius: 30px;
     padding: 1rem 3rem;
     top: 20px;
-    justify-self: anchor-center;
+    left:50%;
+
+
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    z-index:1000;
 } 
+
+.navbar-button{
+   display:flexbox;
+   align-items: center;
+   gap:10px
+}
+
+.navbar-button button{
+  font-size: 0.8rem;      
+  padding: 20px 10px;
+  left : -60px;        
+ position: relative;
+}
