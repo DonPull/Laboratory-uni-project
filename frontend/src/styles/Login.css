@@ -1,0 +1,55 @@
+#login-page{
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, rgba(13, 169, 180, 1) 0%, rgba(8, 122, 130, 1) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+#login-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-bubble{
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.10) 0%, rgba(255, 255, 255, 0.15) 38%, rgba(255, 255, 255, 0.48) 100%);
+    box-shadow: 0 0 6px white;
+}
+
+#bubble-1{
+    width: 1200px;
+    height: 1200px;
+    bottom: -750px;
+    justify-self: center;
+}
+
+#bubble-2{
+    width: 160px;
+    height: 160px;
+    top: 5%;
+    left: 35%;
+}
+
+#bubble-3{
+    width: 310px;
+    height: 310px;
+    top: 20%;
+    left: 70%;
+}
+
+#bubble-4{
+    width: 250px;
+    height: 250px;
+    top: 50%;
+    left: 10%;
+}
