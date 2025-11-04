@@ -1,0 +1,201 @@
+.table-container {
+    display: table;
+    width: 85%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.408);
+    table-layout: fixed;
+    font-size: 1rem;
+    border: 1px solid #e5e7eb;
+}
+
+.table-header {
+    display: table-row;
+    background: #f3f4f6;
+    color: #111827;
+    font-weight: 600;
+    text-transform: capitalize;
+    font-size: 1rem;
+}
+
+.table-header label {
+    display: table-cell;
+    padding: 0.5rem 1rem;
+    vertical-align: middle;
+    text-align: left;
+    word-wrap: break-word;
+    border-right: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table-header label:last-child {
+    border-right: none;
+}
+
+.table-body {
+    display: table-row-group;
+    width: 100%;
+}
+
+.table-row {
+    display: table-row;
+    background: white;
+}
+
+.table-row:nth-child(even) {
+    background: #fbfbfb;
+}
+
+.table-cell {
+    display: table-cell;
+    padding: 0.5rem 1rem;
+    vertical-align: middle;
+    text-align: left;
+    font-size: 1rem;
+    word-break: break-word;
+    border-top: 1px solid #e5e7eb;
+    border-right: 1px solid #e5e7eb;
+}
+
+.table-row .table-cell:last-child {
+    border-right: none;
+}
+
+.table-cell.last-cell {
+    position: relative;
+    padding-right: 5.2rem;
+}
+
+.role-select {
+    padding: 0.35rem 0.6rem;
+    border-radius: 0.25rem;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    font-family: inherit;
+    font-size: 0.9rem;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2.4rem;
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    background-size: 1rem;
+    cursor: pointer;
+}
+
+.save-btn {
+    position: absolute;
+    right: 3.6rem; 
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.6rem;
+    border: none;
+    background-color: #c7c7c7;
+    color: #000000;
+    font-size: 0.85rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.06s ease;
+    font-family: inherit;
+    box-shadow: none;
+}
+
+.save-btn:hover {
+    background-color: #bdbdbd;
+}
+
+.save-btn:active {
+    transform: translateY(1px);
+}
+
+.save-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.15rem rgba(0, 0, 0, 0.06);
+}
+
+.delete-btn {
+    right: 0.6rem;
+}
+
+.delete-btn {
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.6rem;
+    border: none;
+    background-color: #c7c7c7;
+    color: #000000;
+    font-size: 0.85rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.06s ease;
+    font-family: inherit;
+    box-shadow: none;
+}
+
+.delete-btn:hover {
+    background-color: #bdbdbd;
+}
+
+
+.delete-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.15rem rgba(0, 0, 0, 0.06);
+}
+
+.cell-actions {
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.save-btn,
+.delete-btn {
+    position: static;
+    right: auto;
+    top: auto;
+    transform: none;
+}
+
+@media (max-width: 40rem) {
+    .table-container {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+    .table-header,
+    .table-row {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .table-header label,
+    .table-cell {
+        min-width: 8rem;
+    }
+    .table-cell.last-cell {
+        padding-right: 6rem;
+    }
+    .delete-btn {
+        right: 0.8rem;
+        padding: 0.3rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    .save-btn {
+        right: 3.2rem;
+        padding: 0.3rem 0.5rem;
+        font-size: 0.8rem;
+    }
+}
