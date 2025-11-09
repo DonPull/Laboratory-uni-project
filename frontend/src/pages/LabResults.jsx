@@ -69,7 +69,15 @@ function LabResults() {
     return (
         <div className="column width-fill-available align-center gap-30" style={{ paddingTop: "250px" }}>
             <div id="lab-results-header" className="gap-30">
-                <Search />
+                <Search 
+                data={
+                    wholeData.filter(visit => {
+                        const now = new Date();
+                        const visitDate = parseDate(visit.date);
+                        return visitStatus === 0 ? visitDate >= now : visitDate < now;
+                    })
+                }
+                onResults={setFilteredData}/>
                 <SelectButton selectedOptionIndex={visitStatus} callback={setVisitStatus}>
                     <label>Scheduled Visits</label>
                     <label>Past Visits</label>
