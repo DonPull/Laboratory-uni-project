@@ -16,12 +16,21 @@ function App() {
   //   lastName: 'Doe'
   // });
 
+  const LoginMode = Object.freeze({
+    LOGIN: 'LOGIN',
+    SIGNUP: 'SIGNUP',
+  });
+
   return (
     <Router>
       <Routes>
         <Route 
           path="/login" 
-          element={<Login setUser={setUser} />} 
+          element={<Login setUser={setUser} mode={LoginMode.LOGIN} modeEnum={LoginMode} />} 
+        />
+        <Route 
+          path="/register" 
+          element={<Login setUser={setUser} mode={LoginMode.SIGNUP} modeEnum={LoginMode} />} 
         />
         <Route 
           path="/" 
