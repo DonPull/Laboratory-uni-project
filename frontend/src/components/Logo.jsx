@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import logoImg from '../../public/logo.png';
-import '/src/styles/Logo.css';
+import '../styles/Logo.css';
 
 function Logo() {
     const navigate = useNavigate();
@@ -9,7 +9,7 @@ function Logo() {
         <div className="logo" onClick={() => navigate('/')}>
             <label>Lul</label>
             <img src={logoImg} alt="Logo" />
-            <label>in-Labs</label>
+            <label>n-Labs</label>
         </div>
     );
 }
