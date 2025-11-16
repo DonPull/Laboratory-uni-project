@@ -5,7 +5,7 @@ import Logo from './../components/Logo';
 import avatarIcon from "../../public/avatar.png";
 import showPasswordIcon from "../../public/show_password.png";
 import sadFaceIcon from "../../public/sad_face.png";
-import { getElementProperty } from "../utils";
+import { getElementProperty, getRandomIntExcluding } from "../utils";
 
 function Login({ setUser, mode, modeEnum }) {
     const navigate = useNavigate();
@@ -19,14 +19,52 @@ function Login({ setUser, mode, modeEnum }) {
     const [password, setPassword] = useState("");
     const [passwordVisibility, setPasswordVisibility] = useState(false);
     const passwordVisibilityLineRef = useRef(null);
+    const forgotPasswordRef = useRef(null);
 
     useEffect(() => {
         setCurrentPage(mode);
     }, [mode]);
 
-    const playForgotPasswordAnimation = () => {
-        console.log("Forgot Password animation played");
-    };
+    async function playForgotPasswordAnimation(elementRef, targetText, direction = "right", stepCount = 5) {
+        if (!elementRef.current) return;
+        
+        const originalText = elementRef.current.innerText;
+        const maxLength = Math.max(originalText.length, targetText.length);
+
+        const letters = "abcdefghijklmnopqrstuvwxyz";
+        
+        //function to pad shorter array depending on direction
+        const padArray = (arr, length, dir) => {
+            const padCount = length - arr.length;
+            const padding = Array(padCount).fill("");
+            return dir === "left" ? [...padding, ...arr] : [...arr, ...padding];
+        };
+
+        //split strings into aligned char arrays
+        const originalArray = padArray([...originalText], maxLength, direction);
+        const targetArray = padArray([...targetText], maxLength, direction);
+
+        let revealPerStep = Math.ceil(maxLength / stepCount);
+        let revealedLetters = (originalArray.length - 1) + revealPerStep;
+
+        for(let i = 0; i < stepCount; i++) {
+            let excludedIndices = [];
+            for(let j = 0; j < revealedLetters; j++) {
+                let indexOfLetterToChange = getRandomIntExcluding(0, revealedLetters, excludedIndices);
+                if(targetArray[indexOfLetterToChange] !== originalArray[indexOfLetterToChange]) {
+                    let captitalizeLetter = originalArray[indexOfLetterToChange] === originalArray[indexOfLetterToChange].toUpperCase();
+                    originalArray[indexOfLetterToChange] = captitalizeLetter ? letters[Math.floor(Math.random() * letters.length)].toUpperCase() : letters[Math.floor(Math.random() * letters.length)];
+                }
+                excludedIndices.push(indexOfLetterToChange);
+
+                //visualize the change
+                elementRef.current.innerText = originalArray.join("");
+                //delay for visualization
+                await new Promise(resolve => setTimeout(resolve, 100));
+            }
+            revealedLetters += revealPerStep;
+        }
+    }
 
     return (
         <div id="login-page">
@@ -65,7 +103,7 @@ function Login({ setUser, mode, modeEnum }) {
 
                 {currentPage === modeEnum.LOGIN ?
                     <div id="forgot-password-container">
-                        <label id="forgot-password" onClick={playForgotPasswordAnimation}>Forgot Password?</label>
+                        <label ref={forgotPasswordRef} id="forgot-password" onClick={() => playForgotPasswordAnimation(forgotPasswordRef, "Out of scope for project. Sorry.", "left")}>Forgot Password?</label>
                         <label style={{ display: "none" }}>Out of scope. Not implemented.</label>
                         <img src={sadFaceIcon} alt="Functionality is a bit out of reach for the scope of the project I think." />
                     </div> : <></>

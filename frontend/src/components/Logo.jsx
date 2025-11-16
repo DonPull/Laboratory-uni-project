@@ -10,6 +10,7 @@ function Logo({ scale = 1 }) {
             <label style={{ "fontSize": `calc(2.7rem * ${scale})` }}>Lul</label>
             <img src={logoImg} alt="Logo" style={{ "width": `calc(17px * ${scale})`, "transform": `translateY(calc(9px * ${scale}))` }} />
             <label style={{ "fontSize": `calc(2.7rem * ${scale})` }}>n-Labs</label>
+            <div className="logo-underline" />
         </div>
     );
 }

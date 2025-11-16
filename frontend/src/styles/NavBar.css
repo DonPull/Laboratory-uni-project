@@ -9,6 +9,7 @@
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
+  min-width: max-content;
 
 
   display: flex;
@@ -18,8 +19,17 @@
   z-index: 1000;
 }
 
+#navbar .logo:hover *{
+  cursor: pointer;
+}
+
+#navbar .logo:hover .logo-underline{
+  width: 100%;
+}
+
 #navbar-our-location-container{
   align-items: center;
+  gap: 3px;
 }
 #navbar-our-location-container div{
   align-items: center;
@@ -28,23 +38,23 @@
   font-family: system-ui;
   color: #555555;
   font-size: 0.9rem;
-  padding-top: 2px;
 }
 #navbar-our-location-container div:nth-of-type(2) label{
   font-family: system-ui;
   font-weight: 500;
   font-size: 1.1rem;
   line-height: 1.3rem;
-  border-bottom: 3px solid;
+  /* border-bottom: 3px solid; */
   /* border-image: linear-gradient(to right, white 36%, green 36%, green 63%, red 63%) 5; */
-  border-image: linear-gradient(to right, white 35%, green 35%, green 65%, red 65%) 5;
-  transform: translateX(-6px);
+  /* border-image: linear-gradient(to right, white 35%, green 35%, green 65%, red 65%) 5; */
+  transform: translateX(-7px);
 }
 #navbar-our-location-container img{
-  width: 17px;
-  height: 16px;
+  width: 16px;
+  height: 15px;
   margin-right: 4px;
   filter: invert(17%) sepia(1%) saturate(0%) hue-rotate(210deg) brightness(89%) contrast(83%);
+  transform: translateY(-1px);
 }
 
 .navbar-button{
@@ -53,8 +63,41 @@
   gap: 10px;
 }
 
-.navbar-button button{
-  font-size: 0.8rem;      
-  padding: 20px 10px;
-  position: relative;
+.navbar-buttons-container{
+  gap: 10px;
+  margin-left: 3rem;
+}
+.navbar-buttons-container button{
+  border: none;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  background: none;
+}
+.navbar-buttons-container button:hover label{
+  /* color: #e38054; */
+  color: #009cff;
+}
+.navbar-buttons-container button:hover img{
+  /* filter: invert(75%) sepia(30%) saturate(3488%) hue-rotate(320deg) brightness(91%) contrast(94%); */
+  filter: invert(49%) sepia(29%) saturate(6450%) hue-rotate(179deg) brightness(100%) contrast(108%);
+}
+.navbar-buttons-container button *{
+  cursor: pointer;
+  transition: 100ms;
+}
+.navbar-buttons-container button label{
+  font-family: system-ui;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding-bottom: 1px;
+  color: #1e1e1e;
+}
+.navbar-buttons-container button img{
+  width: 21px;
+  height: 21px;
+}
+.navbar-buttons-container button:first-of-type img{
+  width: 29px;
+  height: 29px;
 }
