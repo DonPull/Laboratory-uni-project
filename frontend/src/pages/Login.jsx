@@ -77,7 +77,7 @@ function Login({ setUser, mode, modeEnum }) {
                 }}>{pageText[currentPage].actionButtonText}</button>
 
                 <div id="switch-between-login-and-register-container">
-                    <label>{pageText[currentPage].switchText}</label>
+                    <label>{pageText[currentPage].switchText}&nbsp;</label>
                     <label id="register-link" onClick={() => navigate(currentPage === modeEnum.LOGIN ? '/register' : '/login')}>{pageText[currentPage].switchAction}</label>
                 </div>
             </div>

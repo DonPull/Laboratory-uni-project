@@ -4,7 +4,8 @@
   font-weight: 400;
 
   color: rgb(17, 17, 17);
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
+  background-color: #fff;
 
   --select-button-container: black;
   --select-button-label-1: white;

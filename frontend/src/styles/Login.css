@@ -9,10 +9,10 @@
 }
 
 #welcome-message{
-    font-size: 40px;
     color: #595959;
     font-family: system-ui;
-    margin-bottom: 4.5rem;
+    margin: 1.5rem 0 3.8rem 0;
+    font-size: 2.6rem;
 }
 
 .login-bubble{
@@ -53,13 +53,14 @@
 #login-container{
     display: flex;
     flex-direction: column;
+    transform: translateY(-1rem);
     width: 45rem;
     align-items: center;
     /* gap: 1.5rem; */
     padding: 5rem;
     border: 1px solid var(--light-gray);
     border-radius: 18px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 18px 2px rgba(0, 0, 0, 0.1);
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.87) 71%, rgba(255, 255, 255, 0.87) 100%);
     z-index: 10;
 }
@@ -172,9 +173,22 @@
 }
 #login-action-button:hover{
     transform: translateY(-7px);
-    box-shadow: 0 7px 0 #000000;
+    box-shadow: 0 7px 0 #002861;
 }
 #login-action-button:active{
     transform: translateY(0px);
-    box-shadow: 0 0px 0 #000000;
+    box-shadow: 0 0px 0 #002861;
+}
+
+#switch-between-login-and-register-container label{
+    font-family: system-ui;
+}
+
+#register-link{
+    font-weight: 700;
+    color: #036DFF;
+    cursor: pointer;
+}
+#register-link:hover{
+    text-decoration: underline;
 }

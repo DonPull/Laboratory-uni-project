@@ -1,21 +1,18 @@
-.logo{
-  scale: 1;
-}
-
 .logo img {
-  width: 17px;
+  /* width: 17px; */
   height: max-content;
-  transform: translateY(8px);
+  /* transform: translateY(8px); */
   /* aspect-ratio: 5 / 12 !important; */
 }
 
 .logo label{
-  font-size: 2.7rem;
+  /* font-size: 2.7rem; */
   font-weight: 700;
   background: linear-gradient(0deg, rgb(0 46 110) 0%, rgb(0 239 255) 100%);
   background: linear-gradient(0deg, rgba(0, 53, 128, 1) 7%, rgba(27, 230, 244, 1) 84%);
   background: linear-gradient(0deg, rgba(0, 53, 128, 1) 11%, rgba(12, 217, 255, 1) 71%, rgba(12, 217, 255, 1) 84%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, 0.2));
+  /* filter: drop-shadow(0px 0px 1px rgba(0, 53, 128, 0.3)) drop-shadow(0 0 1px rgba(0, 53, 128, 0.3)); */
+  filter: drop-shadow(0px 0px 1px rgba(9, 88, 200, 0.3)) drop-shadow(0 0 1px rgba(9, 88, 200, 0.3));
 }
