@@ -1,5 +1,6 @@
 import Table from "../components/Table";
 import Search from "../components/Search";
+import "../styles/EmployeeList.css";
 import { useEffect, useState } from "react";
 
 function EmployeeList() {

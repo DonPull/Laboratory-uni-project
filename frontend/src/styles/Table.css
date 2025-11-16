@@ -169,6 +169,18 @@
     transform: none;
 }
 
+/* contact email styling */
+.table-cell[data-key="contactEmail"] {
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.table-cell[data-key="contactEmail"]:hover {
+    overflow: visible;
+    white-space: normal;
+}
+
 @media (max-width: 40rem) {
     .table-container {
         display: block;

@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import '../styles/Table.css';
 import { parseDate } from '../utils';
-
-//const roles = ["Client", "Employee", "Moderator"];
 
 const columnLabels = {
     testType: 'Test',
@@ -18,6 +16,19 @@ const columnLabels = {
     role: 'Role'
 };
 
+function handleCopyEmail(email) {
+    if (!email || !navigator.clipboard) return;
+    navigator.clipboard.writeText(email)
+        .then(() => {
+            console.log('Email copied:', email);
+            alert('Email copied to clipboard!');
+        })
+        .catch(() => {
+            console.warn('Failed to copy email')
+            alert('Failed to copy email to clipboard.');
+        });
+}
+
 function formatCellValue(key, value) {
     if (key === 'contactEmail') {
         return value?.toLowerCase?.() ?? value;
@@ -30,18 +41,10 @@ function formatCellValue(key, value) {
             return value;
         }
     }
-    // keep "Dr." prefix as-is for doctorName
     return value;
 }
 
-/*function handleDelete(item) {
-    console.log("Delete item:", item);
-}
-function handleSave(item) {
-    console.log("Save item:", item);
-}*/
-
-function Table({ data }) {
+function Table({ data = [] }) {
     useEffect(() => {
         console.log("Table data:", data);
     }, [data]);
@@ -53,13 +56,19 @@ function Table({ data }) {
                     <label key={index}>{columnLabels[key] ?? key}</label>
                 )) : <div>No data available</div>}
             </div>
+
             <div className="table-body column gap-10">
                 {data.length > 0 ? data.map((item, rowIndex) => {
                     const keys = Object.keys(item);
                     return (
                         <div className="table-row gap-20" key={item.id ?? rowIndex}>
                             {keys.map((key, cellIndex) => (
-                                <div className={cellIndex === keys.length - 1 ? "table-cell last-cell" : "table-cell"} key={cellIndex}>
+                                <div
+                                    className={cellIndex === keys.length - 1 ? "table-cell last-cell" : "table-cell"}
+                                    data-key={key}
+                                    key={cellIndex}
+                                    onClick={String(key).toLowerCase() === 'contactemail' ? () => handleCopyEmail(item[key]) : undefined}
+                                >
                                     {formatCellValue(key, item[key])}
                                 </div>
                             ))}
