@@ -18,53 +18,167 @@ function Login({ setUser, mode, modeEnum }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordVisibility, setPasswordVisibility] = useState(false);
+
+    const [sadFaceStyle, setSadFaceStyle] = useState({ opacity: 0, transition: "none" });
+    const [animationTotalTime, setAnimationTotalTime] = useState(0);
+    
     const passwordVisibilityLineRef = useRef(null);
     const forgotPasswordRef = useRef(null);
+    const isAnimatingRef = useRef(false); // used to prevent overlapping 'forgot password?' animations
 
     useEffect(() => {
         setCurrentPage(mode);
     }, [mode]);
 
-    async function playForgotPasswordAnimation(elementRef, targetText, direction = "right", stepCount = 5) {
+    useEffect(() => {
+        if (animationTotalTime > 0) {
+            const fadeInOrOutDuration = 1500;
+
+            setSadFaceStyle({
+                opacity: 1,
+                transition: `${fadeInOrOutDuration}ms`
+            });
+
+            const timeVisible = Math.max(0, animationTotalTime - fadeInOrOutDuration);
+
+            // timer 1: fade out the image
+            const hideTimer = setTimeout(() => {
+                setSadFaceStyle({
+                    opacity: 0,
+                    transition: `${fadeInOrOutDuration}ms`
+                });
+            }, timeVisible);
+
+            // timer 2: RESET the state variable to 0 after the whole thing is done. if we don't do this, subsequent animations won't trigger the useEffect
+            const resetStateTimer = setTimeout(() => {
+                setAnimationTotalTime(0);
+            }, animationTotalTime);
+
+            return () => {
+                clearTimeout(hideTimer);
+                clearTimeout(resetStateTimer);
+            };
+        }
+    }, [animationTotalTime]);
+
+
+    async function playForgotPasswordAnimation(
+        elementRef,
+        targetText,
+        {
+            direction = "right",
+            stepCount = 2,
+            returnToOriginalDelay = 0,
+            charRevealDelay = 60,
+            setEstimatedDuration = null
+        } = {}
+    ) {
         if (!elementRef.current) return;
-        
+
         const originalText = elementRef.current.innerText;
         const maxLength = Math.max(originalText.length, targetText.length);
+        const letters = "abcdefghijklmnopqrstuvwxyz     "; // multiple spaces to increase chance of space being picked
 
-        const letters = "abcdefghijklmnopqrstuvwxyz";
-        
-        //function to pad shorter array depending on direction
         const padArray = (arr, length, dir) => {
             const padCount = length - arr.length;
             const padding = Array(padCount).fill("");
             return dir === "left" ? [...padding, ...arr] : [...arr, ...padding];
         };
 
-        //split strings into aligned char arrays
         const originalArray = padArray([...originalText], maxLength, direction);
         const targetArray = padArray([...targetText], maxLength, direction);
 
-        let revealPerStep = Math.ceil(maxLength / stepCount);
-        let revealedLetters = (originalArray.length - 1) + revealPerStep;
+        let revealPerStep = 0;
+        let revealedLetters = 0;
 
-        for(let i = 0; i < stepCount; i++) {
+        if (direction === "left") {
+            for (let i = 0; i < originalArray.length; i++) {
+                if (originalArray[i] !== "") {
+                    revealPerStep = Math.ceil(i / stepCount);
+                    revealedLetters = originalArray.length - i;
+                    break;
+                }
+            }
+        }
+
+        if (setEstimatedDuration) {
+            let totalTicks = 0;
+            let revealedLettersCopy = revealedLetters;
+            
+            for(let i = 0; i < stepCount; i++) {
+                revealedLettersCopy += revealPerStep;
+                totalTicks += revealedLettersCopy;
+            }
+            let calculatedMs = totalTicks * charRevealDelay;
+
+            // if we also reverse the animation, we add the delay + the time it takes to reverse (which should be the same time as the original animation took so we just multiply by 2)
+            if (returnToOriginalDelay > 0) {
+                calculatedMs = (calculatedMs * 2) + returnToOriginalDelay;
+            }
+            setEstimatedDuration(calculatedMs);
+        }
+
+        for (let i = 0; i < stepCount; i++) {
             let excludedIndices = [];
-            for(let j = 0; j < revealedLetters; j++) {
-                let indexOfLetterToChange = getRandomIntExcluding(0, revealedLetters, excludedIndices);
-                if(targetArray[indexOfLetterToChange] !== originalArray[indexOfLetterToChange]) {
-                    let captitalizeLetter = originalArray[indexOfLetterToChange] === originalArray[indexOfLetterToChange].toUpperCase();
-                    originalArray[indexOfLetterToChange] = captitalizeLetter ? letters[Math.floor(Math.random() * letters.length)].toUpperCase() : letters[Math.floor(Math.random() * letters.length)];
+            revealedLetters += revealPerStep;
+            for (let j = 0; j < revealedLetters; j++) {
+                // logic only works for left direction for now
+                let indexOfLetterToChange = getRandomIntExcluding(originalArray.length - revealedLetters, originalArray.length - 1, excludedIndices);
+                
+                if (targetArray[indexOfLetterToChange] !== originalArray[indexOfLetterToChange]) {
+                    if (i === stepCount - 1) {
+                        originalArray[indexOfLetterToChange] = targetArray[indexOfLetterToChange];
+                    } else {
+                        let captitalizeLetter = Math.random() < 0.1; // 10% chance to capitalize
+                        originalArray[indexOfLetterToChange] = captitalizeLetter
+                            ? letters[Math.floor(Math.random() * letters.length)].toUpperCase()
+                            : letters[Math.floor(Math.random() * letters.length)];
+                    }
                 }
                 excludedIndices.push(indexOfLetterToChange);
 
-                //visualize the change
                 elementRef.current.innerText = originalArray.join("");
-                //delay for visualization
-                await new Promise(resolve => setTimeout(resolve, 100));
+
+                await new Promise(resolve => setTimeout(resolve, charRevealDelay));
             }
-            revealedLetters += revealPerStep;
+        }
+
+        if (returnToOriginalDelay > 0) {
+            await new Promise(resolve => setTimeout(resolve, returnToOriginalDelay));
+            // recursively call, but ensure we don't pass 'setEstimatedDuration' parameter so that we don't trigger the time estimation logic to avoid state conflict. Also pass 'returnToOriginalDelay' as 0 to avoid infinite loop
+            await playForgotPasswordAnimation(elementRef, originalText, {
+                direction,
+                stepCount,
+                returnToOriginalDelay: 0,
+                charRevealDelay,
+                setEstimatedDuration: null
+            });
         }
     }
+
+    const handleForgotPasswordClick = async () => {
+        // 1. Check Lock
+        if (isAnimatingRef.current) return;
+        
+        // 2. Set Lock
+        isAnimatingRef.current = true;
+
+        // 3. Run Animation
+        await playForgotPasswordAnimation(
+            forgotPasswordRef,
+            "Out of scope for project. Sorry.",
+            {
+                direction: "left",
+                stepCount: 2,
+                returnToOriginalDelay: 2000,
+                charRevealDelay: 30,
+                setEstimatedDuration: setAnimationTotalTime
+            }
+        );
+
+        // 4. Release Lock
+        isAnimatingRef.current = false;
+    };
 
     return (
         <div id="login-page">
@@ -103,9 +217,9 @@ function Login({ setUser, mode, modeEnum }) {
 
                 {currentPage === modeEnum.LOGIN ?
                     <div id="forgot-password-container">
-                        <label ref={forgotPasswordRef} id="forgot-password" onClick={() => playForgotPasswordAnimation(forgotPasswordRef, "Out of scope for project. Sorry.", "left")}>Forgot Password?</label>
+                        <label ref={forgotPasswordRef} id="forgot-password" onClick={handleForgotPasswordClick}>Forgot Password?</label>
                         <label style={{ display: "none" }}>Out of scope. Not implemented.</label>
-                        <img src={sadFaceIcon} alt="Functionality is a bit out of reach for the scope of the project I think." />
+                        <img src={sadFaceIcon} style={sadFaceStyle} alt="Functionality is a bit out of reach for the scope of the project I think." />
                     </div> : <></>
                 }
 

@@ -153,6 +153,11 @@
 #forgot-password-container img{
     position: absolute;
     opacity: 0;
+    right: 0;
+    transform: translateX(100%);
+    width: 25px;
+    height: 25px;
+    margin-top: 5px;
 }
 
 #login-action-button{
