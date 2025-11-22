@@ -57,6 +57,35 @@
   transform: translateY(-1px);
 }
 
+#login-button{
+  outline: 2px solid #a3a3a3;
+  border-radius: 10px;
+  padding: 8px;
+  box-shadow: 5px 5px 10px #BEBEBE, -5px -5px 10px #ffffff;
+  margin-left: 20rem !important;
+  cursor: pointer;
+}
+#login-button *{
+  cursor: pointer;
+  transition: 100ms;
+}
+#login-button button *{
+  transition: 0ms !important;
+}
+#login-button button img{
+  width: 21px !important;
+  height: 21px !important;
+}
+#login-button:hover{
+  background-color: #fcfcfc;
+}
+#login-button:hover label{
+  color: #009cff;
+}
+#login-button:hover img{
+  filter: invert(49%) sepia(29%) saturate(6450%) hue-rotate(179deg) brightness(100%) contrast(108%);
+}
+
 .navbar-button{
   display: flex;
   align-items: center;

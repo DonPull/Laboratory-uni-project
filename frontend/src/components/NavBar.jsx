@@ -26,7 +26,7 @@ function NavBar({ user }) {
                     <label>Sofia, BG</label>
                 </div>
             </div>
-            {!user ? <div id="login-button"><img src={avatarIcon} alt="Avatar" /><button onClick={() => {navigate('/login')}}>Login</button></div> :
+            {!user ? <div id="login-button" className="navbar-buttons-container" onClick={() => {navigate('/login')}}><button><img src={avatarIcon} alt="Avatar" /><label>Login</label></button></div> :
                 <>
                     <Search />
                     <div className="navbar-buttons-container">
