@@ -2,12 +2,12 @@ import avatarIcon from '../../public/avatar.png';
 import Logo from './Logo';
 import '../styles/NavBar.css';
 import { useNavigate } from 'react-router-dom';
-import Search from './Search';
 import locationIcon from '../../public/location.png';
 import bulgarianFlagIcon from '../../public/bg_flag.png';
 import employeeListIcon from '../../public/employee_list.png';
 import labResultsIcon from '../../public/lab_results.png';
 import reportsIcon from '../../public/reports.png';
+import NavBarSearch from './NavBarSearch';
 
 function NavBar({ user }) {
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ function NavBar({ user }) {
             </div>
             {!user ? <div id="login-button" className="navbar-buttons-container" onClick={() => {navigate('/login')}}><button><img src={avatarIcon} alt="Avatar" /><label>Login</label></button></div> :
                 <>
-                    <Search />
+                    <NavBarSearch />
                     <div className="navbar-buttons-container">
                         <button onClick={() => {navigate('/employee-list')}}>
                             <img src={employeeListIcon} alt="Employee List Icon" />

@@ -1,0 +1,32 @@
+.content-search-container {
+    border: 2px solid #e6e8e9;
+    background-color: #f5f6f8;
+    border-radius: 8px;
+    padding: 0 0.6rem;
+    height: 2.4rem;
+    align-items: center;
+}
+.content-search-container:focus-within {
+    outline: 2px solid #2d91f6;
+    outline-offset: -4px;
+}
+
+.content-search-container img {
+    width: 14px;
+    height: 14px;
+    filter: invert(61%) sepia(6%) saturate(492%) hue-rotate(202deg) brightness(98%) contrast(89%);
+    margin-right: 7px;
+}
+
+.content-search-container input {
+    border: none;
+    caret-color: #2d91f6;
+    background-color: transparent;
+    padding-top: 2px;
+}
+.content-search-container input:focus {
+    outline: none;
+}
+.content-search-container input::placeholder {
+    color: #9797a5;
+}

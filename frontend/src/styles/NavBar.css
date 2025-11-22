@@ -28,8 +28,10 @@
 }
 
 #navbar-our-location-container{
+  min-width: max-content;
   align-items: center;
   gap: 3px;
+  margin-right: 6px;
 }
 #navbar-our-location-container div{
   align-items: center;
@@ -61,7 +63,7 @@
   outline: 2px solid #a3a3a3;
   border-radius: 10px;
   padding: 8px;
-  box-shadow: 5px 5px 10px #BEBEBE, -5px -5px 10px #ffffff;
+  box-shadow: 5px 5px 10px #bebebe91, -5px -5px 10px #ffffff;
   margin-left: 20rem !important;
   cursor: pointer;
 }
@@ -95,8 +97,10 @@
 .navbar-buttons-container{
   gap: 10px;
   margin-left: 3rem;
+  margin-bottom: 2px;
 }
 .navbar-buttons-container button{
+  min-width: max-content;
   border: none;
   align-items: center;
   gap: 4px;

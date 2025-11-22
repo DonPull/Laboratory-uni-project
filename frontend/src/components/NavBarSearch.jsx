@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import searchIcon from '../../public/search.png';
-import '../styles/Search.css';
+import '../styles/NavBarSearch.css';
 
-function Search({ data = [], onResults }) {
+function NavBarSearch({ data = [], onResults }) {
     const [searchQuery, setSearchQuery] = useState('');
 
     const onSearch = (query) => {
@@ -24,16 +24,21 @@ function Search({ data = [], onResults }) {
     }
 
     return (
-        <div className="search-container">
-            <img src={searchIcon} alt="Search" />
-            <input
-                type="text"
-                placeholder="Search"
-                value={searchQuery}
-                onChange={(e) => onSearch(e.target.value)}
-            />
+        <div className='outer-search-container'>
+            <div className="search-popup" />
+            <div className="search-container">
+                <div className="search-icon-container">
+                    <img src={searchIcon} className="search-icon" alt="Search" />
+                </div>
+                <input
+                    type="text"
+                    placeholder="Search for Lab Results & More..."
+                    value={searchQuery}
+                    onChange={(e) => onSearch(e.target.value)}
+                />
+            </div>
         </div>
     );
 }
 
-export default Search;
+export default NavBarSearch;

@@ -1,8 +1,8 @@
 import Table from "../components/Table";
 import SelectButton from "../components/SelectButton";
-import Search from "../components/Search";
 import { useEffect, useState } from "react";
 import { parseDate } from "../utils";
+import ContentSearch from "../components/ContentSearch";
 
 function LabResults() {
     const [wholeData, setWholeData] = useState([]);
@@ -69,7 +69,7 @@ function LabResults() {
     return (
         <div className="column width-fill-available align-center gap-30" style={{ paddingTop: "250px" }}>
             <div id="lab-results-header" className="gap-30">
-                <Search 
+                <ContentSearch 
                 data={
                     wholeData.filter(visit => {
                         const now = new Date();
