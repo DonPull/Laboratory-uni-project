@@ -1,10 +1,11 @@
 import downArr from '../../public/down.png';
+import '/src/styles/Dropdown.css';
 import { useState } from "react";
 
-function Dropdown({onOptionSelect}) {
+function Dropdown({onOptionSelect, dropDownName, options}) {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState("Select an option");
+    const [selectedOption, setSelectedOption] = useState(dropDownName);
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
@@ -18,8 +19,6 @@ function Dropdown({onOptionSelect}) {
             onOptionSelect(option);
         }
     }
-    //Can be externally added options
-    const options = ["Option A", "Option B"];
 
     return (
         <div class="dropdown-container">
@@ -36,7 +35,7 @@ function Dropdown({onOptionSelect}) {
             </button>
 
             {isOpen && (
-                <div class="dropdown-menu-container">
+                <div className="dropdown-menu-container">
                     {options.map((opt) => (
                         <button
                             key={opt}
