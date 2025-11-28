@@ -16,42 +16,32 @@ function EmployeeList() {
             {
                 doctorName: 'Dr. Emily Carter',
                 specialization: 'Cardiologist',
-                age: 45,
                 yearsOfExperience: 18,
                 contactEmail: 'emily.carter@gvmc.com',
-                availabilityStatus: 'Available'
             },
             {
                 doctorName: 'Dr. Daniel Mitchell',
                 specialization: 'Radiologist',
-                age: 39,
                 yearsOfExperience: 12,
                 contactEmail: 'daniel.mitchell@cdc.com',
-                availabilityStatus: 'On Leave'
             },
             {
                 doctorName: 'Dr. Olivia Johnson',
                 specialization: 'Endocrinologist',
-                age: 52,
                 yearsOfExperience: 25,
                 contactEmail: 'olivia.johnson@centralhosp.com',
-                availabilityStatus: 'Available'
             },
             {
                 doctorName: 'Dr. James Harris',
                 specialization: 'Orthopedic Surgeon',
-                age: 47,
                 yearsOfExperience: 20,
                 contactEmail: 'james.harris@metroortho.com',
-                availabilityStatus: 'In Surgery'
             },
             {
                 doctorName: 'Dr. Ava Thompson',
                 specialization: 'Pediatrician',
-                age: 38,
                 yearsOfExperience: 13,
                 contactEmail: 'ava.thompson@happykids.com',
-                availabilityStatus: 'Available'
             }
         ];
 
