@@ -180,6 +180,23 @@
     overflow: visible;
     white-space: normal;
 }
+.no-data-wrapper {
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f3f4f6;
+}
+
+.no-data {
+    padding: 1rem 2rem;
+    color: #6b7280;
+    font-size: 1rem;
+    text-align: center; 
+    font-style: italic;
+}
+
 
 @media (max-width: 40rem) {
     .table-container {

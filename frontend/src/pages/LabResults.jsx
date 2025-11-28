@@ -38,6 +38,12 @@ function LabResults() {
                 date: '01.10.2023',
                 patientName: 'Alice Johnson',
                 doctorName: 'Dr. White'
+            },
+            {
+                testType: 'X-Ray',
+                date: '30.12.2025',
+                patientName: 'Jhon Smith',
+                doctorName: 'Dr. White'
             }
         ];
 

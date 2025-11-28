@@ -48,33 +48,50 @@ function Table({ data = [] }) {
     useEffect(() => {
         console.log("Table data:", data);
     }, [data]);
-
+    
+    
     return (
         <div className="table-container column gap-30">
             <div className="table-header gap-20">
-                {data.length > 0 ? Object.keys(data[0]).map((key, index) => (
-                    <label key={index}>{columnLabels[key] ?? key}</label>
-                )) : <div>No data available</div>}
-            </div>
+    {data.length > 0 ? (
+        Object.keys(data[0]).map((key, index) => (
+            <label key={index}>{columnLabels[key] ?? key}</label>
+        ))
+    ) : (
+        <div className="no-data-wrapper">
+            <label className='no-data'>No data available</label>
+        </div>
+    )}
+</div>
 
-            <div className="table-body column gap-10">
-                {data.length > 0 ? data.map((item, rowIndex) => {
-                    const keys = Object.keys(item);
-                    return (
-                        <div className="table-row gap-20" key={item.id ?? rowIndex}>
-                            {keys.map((key, cellIndex) => (
-                                <div
-                                    className={cellIndex === keys.length - 1 ? "table-cell last-cell" : "table-cell"}
-                                    data-key={key}
-                                    key={cellIndex}
-                                    onClick={String(key).toLowerCase() === 'contactemail' ? () => handleCopyEmail(item[key]) : undefined}
-                                >
-                                    {formatCellValue(key, item[key])}
-                                </div>
-                            ))}
-                        </div>
-                    );
-                }) : <div>No data available</div>}
+
+<div className="table-body column gap-10">
+        {data.length > 0 &&
+            data.map((item, rowIndex) => {
+                const keys = Object.keys(item);
+                return (
+                    <div className="table-row gap-20" key={item.id ?? rowIndex}>
+                        {keys.map((key, cellIndex) => (
+                            <div
+                                className={
+                                    cellIndex === keys.length - 1
+                                        ? "table-cell last-cell"
+                                        : "table-cell"
+                                }
+                                data-key={key}
+                                key={cellIndex}
+                                onClick={
+                                    String(key).toLowerCase() === 'contactemail'
+                                        ? () => handleCopyEmail(item[key])
+                                        : undefined
+                                }
+                            >
+                                {formatCellValue(key, item[key])}
+                            </div>
+                        ))}
+                    </div>
+                );
+            })}
             </div>
         </div>
     );
