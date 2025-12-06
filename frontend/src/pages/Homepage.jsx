@@ -6,7 +6,7 @@ function Homepage({ user }) {
     return (
         <main id="homepage">
             <div className="user-greeting">
-                {user ? <h1>Welcome, {user.firstName} {user.lastName}!</h1> : <h1>Please log in to continue.</h1>}
+                {user ? <h1>Welcome, {user.fullName.split(" ")[0]} {user.fullName.split(" ")[1]}!</h1> : <h1>Please log in to continue.</h1>}
             </div>
         </main>
     );

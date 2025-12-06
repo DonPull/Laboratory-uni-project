@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import './styles/common.css';
+import './styles/Toast.css';
 import Login from './pages/Login.jsx';
 import Homepage from './pages/Homepage.jsx';
 import LabResults from './pages/LabResults.jsx';
@@ -11,10 +12,6 @@ import NavBar from './components/NavBar.jsx';
 
 function App() {
   const [user, setUser] = useState(undefined);
-  // const [user, setUser] = useState({
-  //   firstName: 'John',
-  //   lastName: 'Doe'
-  // });
 
   const LoginMode = Object.freeze({
     LOGIN: 'LOGIN',

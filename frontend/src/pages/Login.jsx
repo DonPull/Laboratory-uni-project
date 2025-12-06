@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../styles/Login.css";
 import Logo from './../components/Logo';
 import avatarIcon from "../../public/avatar.png";
 import showPasswordIcon from "../../public/show_password.png";
 import sadFaceIcon from "../../public/sad_face.png";
+import penIcon from "../../public/pen.png";
 import { getElementProperty, getRandomIntExcluding } from "../utils";
+import Toast from './../components/Toast';
 
 function Login({ setUser, mode, modeEnum }) {
     const navigate = useNavigate();
@@ -15,8 +18,17 @@ function Login({ setUser, mode, modeEnum }) {
     };
     const [currentPage, setCurrentPage] = useState(mode || modeEnum.LOGIN);
 
+    const [toastObj, setToastObj] = useState({
+        show: false,
+        message: null,
+        duration: 3000,
+        type: "error"
+    });
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [passwordVisibility, setPasswordVisibility] = useState(false);
 
     const [sadFaceStyle, setSadFaceStyle] = useState({ opacity: 0, transition: "none" });
@@ -28,6 +40,12 @@ function Login({ setUser, mode, modeEnum }) {
 
     useEffect(() => {
         setCurrentPage(mode);
+
+        // Clear all form fields when switching modes
+        setEmail("");
+        setPassword("");
+        setFirstName("");
+        setLastName("");
     }, [mode]);
 
     useEffect(() => {
@@ -104,7 +122,7 @@ function Login({ setUser, mode, modeEnum }) {
         if (setEstimatedDuration) {
             let totalTicks = 0;
             let revealedLettersCopy = revealedLetters;
-            
+
             for(let i = 0; i < stepCount; i++) {
                 revealedLettersCopy += revealPerStep;
                 totalTicks += revealedLettersCopy;
@@ -124,7 +142,7 @@ function Login({ setUser, mode, modeEnum }) {
             for (let j = 0; j < revealedLetters; j++) {
                 // logic only works for left direction for now
                 let indexOfLetterToChange = getRandomIntExcluding(originalArray.length - revealedLetters, originalArray.length - 1, excludedIndices);
-                
+
                 if (targetArray[indexOfLetterToChange] !== originalArray[indexOfLetterToChange]) {
                     if (i === stepCount - 1) {
                         originalArray[indexOfLetterToChange] = targetArray[indexOfLetterToChange];
@@ -180,24 +198,116 @@ function Login({ setUser, mode, modeEnum }) {
         isAnimatingRef.current = false;
     };
 
+    const handleAuth = async () => {
+        if (!email || !password) {
+            setToastObj({
+                show: true,
+                type: 'error',
+                message: "Please fill in email and password.",
+                duration: 4000
+            });
+            return;
+        }
+        if (currentPage === modeEnum.SIGNUP && (!firstName || !lastName)) {
+            setToastObj({
+                show: true,
+                type: 'error',
+                message: "Please fill in your first and last name.",
+                duration: 4000
+            });
+            return;
+        }
+        try {
+            if (currentPage === modeEnum.SIGNUP) {
+                // --- REGISTER ---
+                const payload = {
+                    fullName: `${firstName} ${lastName}`,
+                    email: email,
+                    password: password
+                };
+                const response = await axios.post('http://localhost:3000/register', payload);
+                
+                if (response.status === 201) {
+                    setToastObj({
+                        show: true,
+                        type: 'success',
+                        message: "Account created successfully!",
+                        duration: 4000
+                    });
+
+                    // clear the text from the input fields
+                    setEmail("");
+                    setPassword("");
+                    setFirstName("");
+                    setLastName("");
+                }
+            } else {
+                // --- LOGIN ---
+                const payload = {
+                    email: email,
+                    password: password
+                };
+                const response = await axios.post('http://localhost:3000/login', payload);
+                
+                if (response.status === 200) {
+                    setUser(response.data); // Set the user in App.jsx state, aka set the global user
+                    navigate('/');
+                }
+            }
+        } catch (error) {
+            console.error("Auth Error:", error);
+            if (error.response && error.response.data && error.response.data.error) {
+                setToastObj({
+                    show: true,
+                    type: 'error',
+                    message: error.response.data.error,
+                    duration: 4000
+                });
+            } else {
+                setToastObj({
+                    show: true,
+                    type: 'error',
+                    message: "Something went wrong. Please check that the backend is running.",
+                    duration: 4000
+                });
+            }
+        }
+    };
+
     return (
         <div id="login-page">
+            {toastObj.show && <Toast position="bottom right" closeToastCallbackFunction={() => setToastObj(prev => {return {...prev, show: false}})} toastMessage={toastObj.message} notificationDurationInMs={toastObj.duration} notificationType={toastObj.type} />}
+
             <div id="bubble-1" className="login-bubble"/>
             <div id="bubble-2" className="login-bubble"/>
             <div id="bubble-3" className="login-bubble"/>
             <div id="bubble-4" className="login-bubble"/>
             
-            <div id="login-container">
+            <div id="login-container" onKeyDown={(e) => e.key === "Enter" && handleAuth()}>
                 <Logo />
                 
                 <label id="welcome-message">{pageText[currentPage].welcome}</label>
                 
                 <div id="login-inputs" className="column">
+                    <div style={ currentPage === modeEnum.LOGIN ? { display: "none" } : { justifyContent: "space-between" } }>
+                        <div className={`input-container ${firstName ? "filled" : ""}`} style={{ "width": "45%" }}>
+                            <label className="input-placeholder">First Name</label>
+                            <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                            <img src={penIcon} style={{ "width": "21px", "height": "21px" }} />
+                        </div>
+                        <div className={`input-container ${lastName ? "filled" : ""}`} style={{ "width": "45%" }}>
+                            <label className="input-placeholder">Last Name</label>
+                            <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                            <img src={penIcon} style={{ "width": "21px", "height": "21px" }} />
+                        </div>
+                    </div>
+
                     <div className={`input-container ${email ? "filled" : ""}`}>
                         <label className="input-placeholder">{pageText[currentPage].emailPlaceholder}</label>
                         <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
                         <img src={avatarIcon} alt="User Avatar" />
                     </div>
+
                     <div className={`input-container ${password ? "filled" : ""}`}>
                         <label className="input-placeholder">Password</label>
                         <input type={passwordVisibility ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} />
@@ -223,10 +333,7 @@ function Login({ setUser, mode, modeEnum }) {
                     </div> : <></>
                 }
 
-                <button id="login-action-button" onClick={() => {
-                    setUser({ firstName: 'John', lastName: 'Doe' });
-                    navigate('/');
-                }}>{pageText[currentPage].actionButtonText}</button>
+                <button id="login-action-button" onClick={handleAuth}>{pageText[currentPage].actionButtonText}</button>
 
                 <div id="switch-between-login-and-register-container">
                     <label>{pageText[currentPage].switchText}&nbsp;</label>
